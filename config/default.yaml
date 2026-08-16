@@ -1,0 +1,23 @@
+monitoring:
+  interval: 5
+
+thresholds:
+  cpu_warning: 70
+  cpu_critical: 90
+  cpu_duration: 300
+  memory_warning: 75
+  memory_critical: 90
+  disk_warning: 80
+  disk_critical: 90
+
+storage:
+  retention_days: 30
+
+alerts:
+  enabled: true
+
+animations:
+  enabled: true
+
+ai:
+  enabled: false

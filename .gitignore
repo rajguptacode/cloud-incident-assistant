@@ -3,3 +3,15 @@ __pycache__/
 *.pyc
 *.egg-info/
 .pytest_cache/
+.ruff_cache/
+.env
+*.db
+data/
+dist/
+build/
+
+# Agent/tooling files — not part of the published project
+.opencode/
+opencode.json
+AGENTS.md
+WORKSPACE.md
