@@ -10,7 +10,6 @@ import os
 import platform
 import re
 import subprocess
-import time
 from datetime import datetime, timedelta
 from pathlib import Path
 from types import SimpleNamespace
@@ -19,7 +18,6 @@ from typing import Annotated, Any
 import typer
 import yaml
 from rich.console import Console, Group, RenderableType
-from rich.live import Live
 from rich.text import Text
 
 from .. import __version__
@@ -252,20 +250,13 @@ def monitor(
     as_json: JsonFlag = False,
     no_color: NoColorFlag = False,
 ) -> None:
-    """Live monitoring mode."""
-    data = _status_data()
+    """Live monitoring mode (full-screen TUI)."""
     if as_json:
-        emit(data)
+        emit(_status_data())
         return
-    console = make_console(no_color)
-    panels.header(console, __version__)
-    try:
-        with Live(_render_status(console, data, _cfg(ctx)), console=console, refresh_per_second=1) as live:
-            while True:
-                time.sleep(interval)
-                live.update(_render_status(console, _status_data(), _cfg(ctx)))
-    except KeyboardInterrupt:
-        console.print(Text(f"Monitoring stopped ({time.strftime('%H:%M:%S')}).", style=theme.MUTED))
+    from cloudops_sentinel.ui.monitor_tui import run as tui_run
+
+    tui_run(interval=interval, no_color=no_color)
 
 
 @app.command(rich_help_panel="Monitoring")

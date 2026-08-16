@@ -6,6 +6,16 @@ CloudOps Sentinel watches a Linux system, collects metrics, logs and events, det
 
 It is built to be *explainable*: every incident carries its evidence, confidence score, and alternative hypotheses. Never blind alerts, never alert floods — repeated observations update one incident instead of spamming.
 
+## Screenshots
+
+| `sentinel status` — system health dashboard | `sentinel monitor` — full-screen live TUI |
+|---|---|
+| ![sentinel status](docs/screenshots/screenshot-status-1.png) | ![sentinel monitor](docs/screenshots/screenshot-monitor-1.png) |
+
+| `sentinel status` — resource & incident details | `sentinel monitor` — live views (9 tabs) |
+|---|---|
+| ![sentinel status detail](docs/screenshots/screenshot-status-2.png) | ![sentinel monitor tabs](docs/screenshots/screenshot-monitor-2.png) |
+
 ---
 
 ## Why it exists
@@ -24,7 +34,8 @@ The entire pipeline runs locally and offline. It never modifies your system, nev
 ## Features
 
 - **Real-time status** — `sentinel status` shows host health, per-resource utilization bars, service states and open incident counts at a glance.
-- **Live monitoring** — `sentinel monitor` streams per-second resource telemetry with sparklines.
+- **Full-screen live TUI** — `sentinel monitor` opens an alt-screen dashboard with a gradient wordmark, 9 keyboard-driven tabs (Overview, CPU, Memory, Disk, Network, Processes, Incidents, Logs, Analytics), live sparklines, per-core CPU bars, network speed graphs and smoothed utilization gauges. Keys: `1–9` jump tabs, arrows cycle, `+`/`-` change refresh rate, `h` help, `q` quit. A background sampler keeps the UI responsive; non-tty output falls back to a plain loop.
+- **Dark premium theme** — semantic color tokens (yellow brand primary, purple secondary, green/red/orange states) with `--no-color` / `NO_COLOR` and ASCII fallback; ASCII-safe icons when Unicode is unavailable.
 - **Incident lifecycle** — `DETECTED → TRIAGED → INVESTIGATING → MITIGATED → RESOLVED → CLOSED`, with deduplication (one incident per problem, not an alert storm) and automatic recovery detection.
 - **Severity scoring** — multi-signal scoring (0–100) combining metric severity, breadth of symptoms, service impact and incident age. Exit codes map to health: `0` healthy, `1` warning, `2` critical — scriptable for CI and paging hooks.
 - **Diagnosis** — evidence-backed probable cause with confidence (0–100%), contributing factors and alternatives. Never claims certainty without stored evidence.
@@ -81,6 +92,7 @@ pip install -e ".[dev]"
 
 ```bash
 sentinel status                 # live system health
+sentinel monitor                # full-screen TUI: 9 tabs, keyboard-driven
 sentinel demo                   # end-to-end demo: anomaly → incident → report
 sentinel simulate cpu-spike     # run a realistic scenario through the real pipeline
 sentinel incidents              # list incidents
@@ -95,7 +107,7 @@ sentinel health                 # self-health; exit 0/1/2
 | Group | Command | Purpose |
 |---|---|---|
 | Monitoring | `status` | Current system health |
-| | `monitor` | Live per-second monitoring |
+| | `monitor` | Full-screen live TUI (9 tabs) |
 | | `cpu` `memory` `disk` `network` | Per-resource metrics |
 | System | `processes` | Top processes by CPU |
 | | `services` | Service states |

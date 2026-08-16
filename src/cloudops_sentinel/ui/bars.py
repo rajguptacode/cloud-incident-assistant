@@ -21,7 +21,7 @@ def percent_bar(value: float, width: int = 16, warn: float = 70, crit: float = 9
     filled = min(filled, width)
     text = Text()
     text.append(icon("block") * filled, style=_state_style(value, warn, crit))
-    text.append(icon("empty") * (width - filled), style=theme.MUTED)
+    text.append(icon("empty") * (width - filled), style=theme.TEXT_DISABLED)
     return text
 
 

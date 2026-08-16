@@ -14,7 +14,7 @@ def test_theme_tokens_defined(token):
 
 def test_severity_styles():
     assert severity_style("CRITICAL") != severity_style("INFO")
-    assert severity_style("high") == theme.DANGER
+    assert severity_style("high") == theme.DANGER.lower()
 
 
 def test_icon_unicode(monkeypatch):
